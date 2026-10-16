@@ -1,15 +1,43 @@
+
 const loginForm = document.getElementById("loginForm");
 const message = document.getElementById("message");
 
-loginForm.addEventListener("submit", (event) => {
+loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    console.log("Email :", email);
-    console.log("Mot de passe saisi", password);
+    message.style.color = "black";
+    message.textContent = "Connexion en cours...";
 
-    message.textContent = "Formulaire envoyé avec succès !";
-    message.style.color = "green";
+    try {
+        const response = await fetch("/api/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email,
+                password
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Erreur de connexion");
+        }
+
+        message.style.color = "green";
+        message.textContent = data.message;
+
+        console.log("Utilisateur connecté :", data.user);
+
+    } catch (error) {
+        message.style.color = "red";
+        message.textContent = "Erreur : " + error.message;
+
+        console.error("Erreur de connexion :", error);
+    }
 });

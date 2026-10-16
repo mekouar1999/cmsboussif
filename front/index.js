@@ -11,6 +11,7 @@ loginForm.addEventListener("submit", async (event) => {
     message.style.color = "black";
     message.textContent = "Connexion en cours...";
 
+    
     try {
         const response = await fetch("/api/login", {
             method: "POST",

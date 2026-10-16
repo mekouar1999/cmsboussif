@@ -1,11 +1,17 @@
 const express = require('express')
 const app = express()
+const dotenv = require('dotenv')
+
+dotenv.config()
+
 
 app.get("/",(req,res)=>{
     res.send('hello from backend')
 })
 
-app.listen(4000,()=>{
-    console.log('Server is running on port 4000')
+const port = process.env.PORT 
+
+app.listen(port,()=>{
+    console.log('Server is running on port ' + port)
 })
     

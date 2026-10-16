@@ -11,9 +11,11 @@ loginForm.addEventListener("submit", async (event) => {
     message.style.color = "black";
     message.textContent = "Connexion en cours...";
 
-    
+    // Détermine l'URL de l'API (s'adapte à Express port 4001 ou Live Server)
+    const API_BASE = window.location.origin.includes(":4001") ? "" : "http://localhost:4001";
+
     try {
-        const response = await fetch("/api/login", {
+        const response = await fetch(`${API_BASE}/api/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
